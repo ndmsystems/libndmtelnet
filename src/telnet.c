@@ -439,6 +439,7 @@ __ndm_telnet_recv(struct ndm_telnet_t *telnet,
 	}
 
 	if (strcmp((*response)->name, "event") == 0) {
+		*response_text = "";
 		goto done;
 	}
 
