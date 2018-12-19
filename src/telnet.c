@@ -28,7 +28,7 @@ struct ndm_telnet_t {
 #if defined(_WIN32) || defined(_WIN64)
 #include <WinSock2.h>
 
-#define close closesocket
+#define close									closesocket
 
 #if defined(_MSC_VER)
 #include <BaseTsd.h>
@@ -209,9 +209,9 @@ static enum ndm_telnet_err_t __ndm_telnet_send(struct ndm_telnet_t *telnet,
 	return NDM_TELNET_ERR_OK;
 }
 
-static void ndm_telnet_event(telnet_t *telnet,
-							 telnet_event_t *ev,
-							 void *ud)
+static void __ndm_telnet_event(telnet_t *telnet,
+							   telnet_event_t *ev,
+							   void *ud)
 {
 	struct ndm_telnet_t *client = (struct ndm_telnet_t *) ud;
 
@@ -663,7 +663,7 @@ enum ndm_telnet_err_t ndm_telnet_open(struct ndm_telnet_t **telnet,
 		return NDM_TELNET_ERR_OOM;
 	}
 
-	t->stream = telnet_init(TELOPTS, ndm_telnet_event, 0, t);
+	t->stream = telnet_init(TELOPTS, __ndm_telnet_event, 0, t);
 
 	if (t->stream == NULL) {
 		err = NDM_TELNET_ERR_TELNET;
